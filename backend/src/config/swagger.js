@@ -36,6 +36,32 @@ const options = {
             },
           },
         },
+        RegisterRequest: {
+          type: 'object',
+          required: ['username', 'firstName', 'lastName', 'email', 'password'],
+          properties: {
+            username: {
+              type: 'string',
+              example: 'ben',
+            },
+            firstName: {
+              type: 'string',
+              example: 'Ben',
+            },
+            lastName: {
+              type: 'string',
+              example: 'Gideon',
+            },
+            email: {
+              type: 'string',
+              example: 'ben@example.com',
+            },
+            password: {
+              type: 'string',
+              example: 'password123',
+            },
+          },
+        },
         LoginResponse: {
           type: 'object',
           properties: {
@@ -62,6 +88,14 @@ const options = {
             username: {
               type: 'string',
               example: 'ben',
+            },
+            firstName: {
+              type: 'string',
+              example: 'Ben',
+            },
+            lastName: {
+              type: 'string',
+              example: 'Gideon',
             },
             email: {
               type: 'string',
@@ -104,6 +138,39 @@ const options = {
                   },
                 },
               },
+            },
+          },
+        },
+      },
+      '/auth/register': {
+        post: {
+          summary: 'Register a new user',
+          requestBody: {
+            required: true,
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/RegisterRequest',
+                },
+              },
+            },
+          },
+          responses: {
+            201: {
+              description: 'Registration succeeded',
+              content: {
+                'application/json': {
+                  schema: {
+                    $ref: '#/components/schemas/LoginResponse',
+                  },
+                },
+              },
+            },
+            400: {
+              description: 'Missing required fields',
+            },
+            409: {
+              description: 'Username or email already exists',
             },
           },
         },
